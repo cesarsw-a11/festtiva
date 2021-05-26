@@ -47,7 +47,7 @@ def addContact():
    password_encriptado =  bcrypt.hashpw(password_encode,hash)
    cur = mysql.connection.cursor()
    try:
-    cur.execute('INSERT INTO usuarios (username,email,password) VALUES(%s, %s, %s)',(username,email,password_encriptado))
+    cur.execute('INSERT INTO users (username,email,password) VALUES(%s, %s, %s)',(username,email,password_encriptado))
     mysql.connection.commit()
     flash('CONTACT ADDED SUCCESFULLY!!',"success")
    except Exception:
@@ -71,7 +71,7 @@ def sign_in():
 
     cur = mysql.connection.cursor()
     #Obtenemos la data del usuario que se quiere loguear
-    cur.execute("select * from usuarios where username=%s",[username])
+    cur.execute("select * from users where username=%s",[username])
     usuario = cur.fetchone()
     #return {'USUARIO':usuario}  
     cur.close  
@@ -94,7 +94,7 @@ def delete(id):
     if request.method == 'GET':
       idcontact = id
       cur = mysql.connection.cursor()
-      cur.execute('DELETE FROM usuarios where id = {0}'.format(id))
+      cur.execute('DELETE FROM users where id = {0}'.format(id))
       mysql.connection.commit()
       flash('CONTACT REMOVED SUCCESFULLY',"success")
       return redirect(url_for('Index'))
